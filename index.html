@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxRentals - Premium Car Rental</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), transparent);
+            border-radius: 16px;
+            margin-bottom: 3rem;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <main class="fade-in">
+        <section class="hero">
+            <h1>Drive Your Dream Car Today</h1>
+            <p>Experience luxury and performance with our premium selection of vehicles. Easy booking, instant confirmation, no hidden fees.</p>
+            <a href="cars.html" class="btn btn-primary" style="font-size:1.1rem; padding: 0.75rem 2rem;">Explore Fleet</a>
+        </section>
+        
+        <section>
+            <h2 class="text-center mb-3">Featured Vehicles</h2>
+            <div class="grid-container" id="featured-cars"></div>
+            <div class="text-center mt-3">
+                <a href="cars.html" class="btn btn-secondary">View All Cars</a>
+            </div>
+        </section>
+    </main>
+    <div id="footer-placeholder"></div>
+    
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cars = db.get("cars").slice(0, 3); // Get top 3
+            const container = document.getElementById("featured-cars");
+            cars.forEach(car => {
+                container.innerHTML += `
+                    <div class="card car-card">
+                        <img src="${car.image}" alt="${car.model}" class="car-img" loading="lazy">
+                        <div class="car-details">
+                            <div class="car-title">${car.brand} ${car.model}</div>
+                            <div class="car-specs">
+                                <span>🗓️ ${car.year}</span>
+                                <span>🏎️ ${car.type}</span>
+                            </div>
+                            <div class="car-price">$${car.price_per_day} <span style="font-size:0.9rem; color:var(--text-secondary); font-weight:normal;">/ day</span></div>
+                            <a href="booking.html?car=${car.id}" class="btn btn-primary text-center">Book Now</a>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

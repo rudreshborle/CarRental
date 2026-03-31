@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Car - LuxRentals</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .booking-container { grid-template-columns: 1fr; }
+        }
+        .summary-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 100px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <main class="fade-in">
+        <h1 class="mb-3">Complete Your Booking</h1>
+        <div class="booking-container">
+            <div id="car-summary" class="summary-card">
+                <!-- Injected via JS -->
+            </div>
+            
+            <div class="card" style="padding:2rem;">
+                <h2 class="mb-2">Booking Details</h2>
+                <form id="bookingForm">
+                    <div class="grid-container" style="gap:1rem; grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
+                        <div class="form-group">
+                            <label for="pickupDate">Pickup Date</label>
+                            <input type="date" id="pickupDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="returnDate">Return Date</label>
+                            <input type="date" id="returnDate" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <h2 class="mb-2">Payment Simulation</h2>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" class="form-control">
+                            <option value="Card">Credit/Debit Card</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Cash">Cash on Pickup</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:2rem; font-size:1.1rem; padding:1rem;">Confirm & Pay</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content text-center">
+            <div style="font-size: 3rem; color: var(--success-color); margin-bottom: 1rem;">✅</div>
+            <h2>Booking Confirmed!</h2>
+            <p class="text-secondary mt-2 mb-3">Your car has been booked successfully. Redirecting to your dashboard...</p>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>
