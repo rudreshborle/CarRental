@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${car.id}</td>
                 <td><strong>${car.brand} ${car.model}</strong><br><small class="text-secondary">${car.year}</small></td>
                 <td>${car.type}</td>
-                <td>$${car.price_per_day}</td>
+                <td>${utils.formatCurrency(car.price_per_day)}</td>
                 <td>${statusBadge}</td>
                 <td style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                     <button class="btn btn-primary btn-sm" style="padding:0.25rem 0.5rem;" onclick="openEditModal('${car.id}')">Edit</button>
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${b.user_id}</td>
                 <td>${b.car_id}</td>
                 <td>${utils.formatDate(b.pickup_date)} - ${utils.formatDate(b.return_date)}</td>
-                <td>$${b.total_amount}</td>
+                <td>${utils.formatCurrency(b.total_amount)}</td>
                 <td style="color:${statusColor}; font-weight:600;">${b.status}</td>
                 <td>
                     ${b.status === 'Confirmed' ? `<button class="btn btn-danger btn-sm" style="padding:0.25rem 0.5rem;" onclick="cancelBookingAdmin('${b.booking_id}', '${b.car_id}')">Cancel</button>` : ''}
@@ -58,8 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Add Car Form
-    document.getElementById("addCarForm").addEventListener("submit", (e) => {
+    document.getElementById("addCarForm").addEventListener("submit", async (e) => {
         e.preventDefault();
+        
+        let imageUrl = document.getElementById("carImage").value;
+        const fileInput = document.getElementById("carImageFile");
+        if (fileInput.files && fileInput.files[0]) {
+            imageUrl = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            });
+        }
+
         const newCar = {
             id: utils.generateId("c"),
             brand: document.getElementById("carBrand").value,
@@ -68,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             type: document.getElementById("carType").value,
             price_per_day: parseFloat(document.getElementById("carPrice").value),
             availability: true,
-            image: document.getElementById("carImage").value
+            image: imageUrl || 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80'
         };
         db.add("cars", newCar);
         showToast("Car added successfully!", "success");
@@ -97,17 +108,29 @@ window.openEditModal = function(id) {
     document.getElementById("editCarModal").classList.add("active");
 }
 
-document.getElementById("editCarForm").addEventListener("submit", (e) => {
+document.getElementById("editCarForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const id = document.getElementById("editCarId").value;
+    
+    let imageUrl = document.getElementById("editCarImage").value;
+    const fileInput = document.getElementById("editCarImageFile");
+    if (fileInput.files && fileInput.files[0]) {
+        imageUrl = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.readAsDataURL(fileInput.files[0]);
+        });
+    }
+
     const updatedCar = {
         brand: document.getElementById("editCarBrand").value,
         model: document.getElementById("editCarModel").value,
         year: parseInt(document.getElementById("editCarYear").value),
         type: document.getElementById("editCarType").value,
-        price_per_day: parseFloat(document.getElementById("editCarPrice").value),
-        image: document.getElementById("editCarImage").value
+        price_per_day: parseFloat(document.getElementById("editCarPrice").value)
     };
+    if (imageUrl) updatedCar.image = imageUrl; // only update image if provided
+    
     db.update("cars", id, updatedCar);
     showToast("Car updated successfully!", "success");
     setTimeout(() => window.location.reload(), 1000);

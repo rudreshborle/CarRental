@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div>
                     <h4>${carName}</h4>
                     <p class="text-secondary mt-1">🗓️ ${utils.formatDate(b.pickup_date)} - ${utils.formatDate(b.return_date)}</p>
-                    <p class="mt-1"><strong>Total:</strong> $${b.total_amount}</p>
+                    <p class="mt-1"><strong>Total:</strong> ${utils.formatCurrency(b.total_amount)}</p>
                 </div>
                 <div style="text-align:right;">
                     <span class="status-badge status-confirmed mb-2" style="display:inline-block;">${b.status}</span><br>
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p class="mt-1">Method: ${p.method}</p>
                 </div>
                 <div style="text-align:right;">
-                    <strong style="font-size:1.25rem;">$${p.amount}</strong><br>
+                    <strong style="font-size:1.25rem;">${utils.formatCurrency(p.amount)}</strong><br>
                     <span class="status-badge status-confirmed mt-1" style="display:inline-block;">${p.status}</span>
                 </div>
             </div>

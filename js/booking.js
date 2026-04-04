@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         <div class="summary-item">
             <span>Rate per Day</span>
-            <strong>$${car.price_per_day}</strong>
+            <strong>${utils.formatCurrency(car.price_per_day)}</strong>
         </div>
         <div class="summary-item">
             <span>Total Days</span>
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="summary-item" style="border:none; font-size:1.25rem;">
             <span>Total Amount</span>
-            <strong id="totalAmount" style="color:var(--primary-color)">$0.00</strong>
+            <strong id="totalAmount" style="color:var(--primary-color)">₹0.00</strong>
         </div>
     `;
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showToast("Return date cannot be before pickup date", "error");
                 returnDate.value = "";
                 totalDaysEl.textContent = "0";
-                totalAmountEl.textContent = "$0.00";
+                totalAmountEl.textContent = "₹0.00";
                 return;
             }
 

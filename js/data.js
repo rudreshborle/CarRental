@@ -5,7 +5,7 @@ const DUMMY_CARS = [
         brand: "Tesla",
         year: 2023,
         type: "Electric",
-        price_per_day: 120,
+        price_per_day: 10000,
         availability: true,
         image: "assets/images/tesla.png"
     },
@@ -15,7 +15,7 @@ const DUMMY_CARS = [
         brand: "Ford",
         year: 2022,
         type: "Sports",
-        price_per_day: 150,
+        price_per_day: 150000,
         availability: true,
         image: "assets/images/mustang.png"
     },
@@ -25,7 +25,7 @@ const DUMMY_CARS = [
         brand: "Honda",
         year: 2021,
         type: "Sedan",
-        price_per_day: 45,
+        price_per_day: 3800,
         availability: true,
         image: "assets/images/civic.png"
     },
@@ -35,7 +35,7 @@ const DUMMY_CARS = [
         brand: "BMW",
         year: 2023,
         type: "SUV",
-        price_per_day: 110,
+        price_per_day: 9200,
         availability: true,
         image: "assets/images/bmw.png"
     },
@@ -45,7 +45,7 @@ const DUMMY_CARS = [
         brand: "Jeep",
         year: 2022,
         type: "SUV",
-        price_per_day: 80,
+        price_per_day: 6700,
         availability: true,
         image: "assets/images/jeep.png"
     },
@@ -55,9 +55,39 @@ const DUMMY_CARS = [
         brand: "Porsche",
         year: 2024,
         type: "Sports",
-        price_per_day: 300,
+        price_per_day: 25200,
         availability: true,
         image: "assets/images/porsche.png"
+    },
+    {
+        id: "c_7",
+        model: "Swift",
+        brand: "Maruti Suzuki",
+        year: 2023,
+        type: "Hatchback",
+        price_per_day: 1500,
+        availability: true,
+        image: "assets/images/swift.png"
+    },
+    {
+        id: "c_8",
+        model: "Nexon",
+        brand: "Tata",
+        year: 2024,
+        type: "SUV",
+        price_per_day: 2500,
+        availability: true,
+        image: "assets/images/nexon.png"
+    },
+    {
+        id: "c_9",
+        model: "Thar",
+        brand: "Mahindra",
+        year: 2023,
+        type: "SUV",
+        price_per_day: 3500,
+        availability: true,
+        image: "assets/images/thar.png"
     }
 ];
 
@@ -118,8 +148,32 @@ const db = {
 const utils = {
     generateId: (prefix) => `${prefix}_${Math.random().toString(36).substr(2, 9)}`,
     formatDate: (dateString) => new Date(dateString).toLocaleDateString(),
-    formatCurrency: (amount) => `$${parseFloat(amount).toFixed(2)}`
+    formatCurrency: (amount) => `₹${parseFloat(amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 };
+
+// Auto-patch for existing cached prices to override to INR values
+(function patchPrices() {
+    let currentCars = JSON.parse(localStorage.getItem("cars") || "[]");
+    let modified = false;
+    currentCars.forEach(car => {
+        const matchingCar = DUMMY_CARS.find(c => c.id === car.id);
+        if (matchingCar && car.price_per_day !== matchingCar.price_per_day) {
+            car.price_per_day = matchingCar.price_per_day;
+            modified = true;
+        }
+    });
+
+    DUMMY_CARS.forEach(dummyCar => {
+        if (!currentCars.some(c => c.id === dummyCar.id)) {
+            currentCars.push(dummyCar);
+            modified = true;
+        }
+    });
+
+    if (modified) {
+        localStorage.setItem("cars", JSON.stringify(currentCars));
+    }
+})();
 
 // Auto-patch for existing cached images to override to local assets
 (function patchBrokenImages() {
@@ -128,7 +182,7 @@ const utils = {
     currentCars.forEach(car => {
         if (car.image.includes("unsplash.com")) {
             const newMatchingCar = DUMMY_CARS.find(c => c.id === car.id);
-            if(newMatchingCar) {
+            if (newMatchingCar) {
                 car.image = newMatchingCar.image;
                 modified = true;
             }

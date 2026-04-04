@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span>🗓️ ${car.year}</span>
                             <span>🏎️ ${car.type}</span>
                         </div>
-                        <div class="car-price">$${car.price_per_day} <span style="font-size:0.9rem; color:var(--text-secondary); font-weight:normal;">/ day</span></div>
+                        <div class="car-price">${utils.formatCurrency(car.price_per_day)} <span style="font-size:0.9rem; color:var(--text-secondary); font-weight:normal;">/ day</span></div>
                         ${btnHtml}
                     </div>
                 </div>

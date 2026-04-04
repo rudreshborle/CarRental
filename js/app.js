@@ -85,7 +85,7 @@ function renderNavbar() {
         <nav class="navbar">
             <div class="nav-brand">
                 <a href="index.html" class="logo-text">
-                    <span class="logo-icon">🚗</span> Lux<span class="logo-highlight">Rentals</span>
+                    Elite<span class="logo-highlight">Wheels</span>
                 </a>
             </div>
             <div class="nav-links">
@@ -121,14 +121,14 @@ function renderFooter() {
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-brand logo-text" style="justify-content: center;">
-                    <span class="logo-icon">🚗</span> Lux<span class="logo-highlight">Rentals</span>
+                    Elite<span class="logo-highlight">Wheels</span>
                 </div>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
                     <a href="cars.html">Fleet</a>
                     <a href="#">Contact Us</a>
                 </div>
-                <div class="footer-copy">&copy; 2026 LuxRentals. All rights reserved.</div>
+                <div class="footer-copy">&copy; 2026 EliteWheels. All rights reserved.</div>
             </div>
         </footer>
     `;
