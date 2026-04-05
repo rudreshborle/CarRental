@@ -1,60 +1,23 @@
+/** Bump when the default fleet catalog changes so localStorage picks up the new list. */
+const FLEET_CATALOG_VERSION = "v2-indian";
+
 const DUMMY_CARS = [
-    {
-        id: "c_1",
-        model: "Model S",
-        brand: "Tesla",
-        year: 2023,
-        type: "Electric",
-        price_per_day: 10000,
-        availability: true,
-        image: "assets/images/tesla.png"
-    },
-    {
-        id: "c_2",
-        model: "Mustang GT",
-        brand: "Ford",
-        year: 2022,
-        type: "Sports",
-        price_per_day: 150000,
-        availability: true,
-        image: "assets/images/mustang.png"
-    },
-    {
-        id: "c_3",
-        model: "Civic",
-        brand: "Honda",
-        year: 2021,
-        type: "Sedan",
-        price_per_day: 3800,
-        availability: true,
-        image: "assets/images/civic.png"
-    },
     {
         id: "c_4",
         model: "X5",
         brand: "BMW",
         year: 2023,
-        type: "SUV",
+        type: "Luxury SUV",
         price_per_day: 9200,
         availability: true,
         image: "assets/images/bmw.png"
-    },
-    {
-        id: "c_5",
-        model: "Wrangler",
-        brand: "Jeep",
-        year: 2022,
-        type: "SUV",
-        price_per_day: 6700,
-        availability: true,
-        image: "assets/images/jeep.png"
     },
     {
         id: "c_6",
         model: "911 Carrera",
         brand: "Porsche",
         year: 2024,
-        type: "Sports",
+        type: "Luxury Sports",
         price_per_day: 25200,
         availability: true,
         image: "assets/images/porsche.png"
@@ -88,6 +51,86 @@ const DUMMY_CARS = [
         price_per_day: 3500,
         availability: true,
         image: "assets/images/thar.png"
+    },
+    {
+        id: "c_10",
+        model: "Creta",
+        brand: "Hyundai",
+        year: 2024,
+        type: "SUV",
+        price_per_day: 3200,
+        availability: true,
+        image: "assets/images/creta.png"
+    },
+    {
+        id: "c_11",
+        model: "Seltos",
+        brand: "Kia",
+        year: 2024,
+        type: "SUV",
+        price_per_day: 3000,
+        availability: true,
+        image: "assets/images/seltos.png"
+    },
+    {
+        id: "c_12",
+        model: "Dzire",
+        brand: "Maruti Suzuki",
+        year: 2023,
+        type: "Sedan",
+        price_per_day: 1800,
+        availability: true,
+        image: "assets/images/dzire.png"
+    },
+    {
+        id: "c_13",
+        model: "Tiago",
+        brand: "Tata",
+        year: 2023,
+        type: "Hatchback",
+        price_per_day: 1400,
+        availability: true,
+        image: "assets/images/tiago.png"
+    },
+    {
+        id: "c_14",
+        model: "Scorpio N",
+        brand: "Mahindra",
+        year: 2024,
+        type: "SUV",
+        price_per_day: 4200,
+        availability: true,
+        image: "assets/images/scorpio.png"
+    },
+    {
+        id: "c_15",
+        model: "Hector",
+        brand: "MG",
+        year: 2023,
+        type: "SUV",
+        price_per_day: 3800,
+        availability: true,
+        image: "assets/images/hector.png"
+    },
+    {
+        id: "c_16",
+        model: "Ertiga",
+        brand: "Maruti Suzuki",
+        year: 2024,
+        type: "MPV",
+        price_per_day: 2200,
+        availability: true,
+        image: "assets/images/ertiga.png"
+    },
+    {
+        id: "c_17",
+        model: "Punch",
+        brand: "Tata",
+        year: 2024,
+        type: "SUV",
+        price_per_day: 2000,
+        availability: true,
+        image: "assets/images/punch.png"
     }
 ];
 
@@ -120,6 +163,14 @@ function initializeDatabase() {
 
 // Call init immediately
 initializeDatabase();
+
+// Replace cached fleet when the default catalog changes (one-time per version)
+(function migrateFleetCatalog() {
+    const vKey = "carRental_fleetVersion";
+    if (localStorage.getItem(vKey) === FLEET_CATALOG_VERSION) return;
+    localStorage.setItem("cars", JSON.stringify(DUMMY_CARS));
+    localStorage.setItem(vKey, FLEET_CATALOG_VERSION);
+})();
 
 // DB Utility functions
 const db = {
