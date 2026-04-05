@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,52 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
     <style>
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .stat-card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; }
-        .stat-value { font-size: 2rem; font-weight: 700; color: var(--primary-color); margin-top: 0.5rem; }
-        
-        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: var(--card-shadow); }
-        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { background: var(--bg-color); font-weight: 600; color: var(--text-secondary); }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-color);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
     </style>
 </head>
+
 <body>
     <div id="navbar-placeholder"></div>
     <main class="fade-in">
@@ -23,7 +61,7 @@
             <h1>Admin Control Panel</h1>
             <button class="btn btn-primary" onclick="window.location.href='index.html'">View Site</button>
         </div>
-        
+
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="text-secondary">Total Bookings</div>
@@ -41,9 +79,10 @@
 
         <div style="display:flex; justify-content:space-between; align-items:center;" class="mb-2">
             <h2>Manage Fleet</h2>
-            <button class="btn btn-primary" onclick="document.getElementById('addCarModal').classList.add('active')">+ Add Car</button>
+            <button class="btn btn-primary" onclick="document.getElementById('addCarModal').classList.add('active')">+
+                Add Car</button>
         </div>
-        
+
         <div style="overflow-x:auto; margin-bottom: 3rem;">
             <table id="carsTable">
                 <thead>
@@ -84,10 +123,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Add New Car</h2>
-                <button class="modal-close" onclick="document.getElementById('addCarModal').classList.remove('active')">&times;</button>
+                <button class="modal-close"
+                    onclick="document.getElementById('addCarModal').classList.remove('active')">&times;</button>
             </div>
             <form id="addCarForm">
-                <div class="grid-container" style="gap:1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="grid-container"
+                    style="gap:1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
                     <div class="form-group">
                         <label>Brand</label>
                         <input type="text" id="carBrand" class="form-control" required>
@@ -111,8 +152,11 @@
                     <div class="form-group">
                         <label>Image (URL or Upload)</label>
                         <input type="url" id="carImage" class="form-control" placeholder="Image URL">
-                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">- OR -</div>
-                        <input type="file" id="carImageFile" class="form-control" accept="image/*" style="margin-top: 0.5rem;">
+                        <div
+                            style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+                            - OR -</div>
+                        <input type="file" id="carImageFile" class="form-control" accept="image/*"
+                            style="margin-top: 0.5rem;">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">Save Car</button>
@@ -125,11 +169,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Edit Car</h2>
-                <button class="modal-close" onclick="document.getElementById('editCarModal').classList.remove('active')">&times;</button>
+                <button class="modal-close"
+                    onclick="document.getElementById('editCarModal').classList.remove('active')">&times;</button>
             </div>
             <form id="editCarForm">
                 <input type="hidden" id="editCarId">
-                <div class="grid-container" style="gap:1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="grid-container"
+                    style="gap:1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
                     <div class="form-group">
                         <label>Brand</label>
                         <input type="text" id="editCarBrand" class="form-control" required>
@@ -153,17 +199,21 @@
                     <div class="form-group">
                         <label>Image (URL or Upload)</label>
                         <input type="url" id="editCarImage" class="form-control" placeholder="Image URL">
-                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">- OR -</div>
-                        <input type="file" id="editCarImageFile" class="form-control" accept="image/*" style="margin-top: 0.5rem;">
+                        <div
+                            style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+                            - OR -</div>
+                        <input type="file" id="editCarImageFile" class="form-control" accept="image/*"
+                            style="margin-top: 0.5rem;">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem;">Update Car</button>
             </form>
         </div>
     </div>
-    
+
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
     <script src="js/admin.js"></script>
 </body>
+
 </html>

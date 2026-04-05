@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Render Cars Table
     const carsTbody = document.querySelector("#carsTable tbody");
     cars.forEach(car => {
-        const statusBadge = car.availability 
+        const statusBadge = car.availability
             ? `<span style="color:var(--success-color); font-weight:bold;">Available</span>`
             : `<span style="color:var(--danger-color); font-weight:bold;">Rented</span>`;
-            
+
         carsTbody.innerHTML += `
             <tr>
                 <td>${car.id}</td>
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Render Bookings Table
     const bookingsTbody = document.querySelector("#bookingsTable tbody");
-    bookings.sort((a,b) => b.pickup_date.localeCompare(a.pickup_date)).slice(0, 10).forEach(b => {
+    bookings.sort((a, b) => b.pickup_date.localeCompare(a.pickup_date)).slice(0, 10).forEach(b => {
         const statusColor = b.status === "Confirmed" ? 'var(--success-color)' : 'var(--danger-color)';
         bookingsTbody.innerHTML += `
             <tr>
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add Car Form
     document.getElementById("addCarForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        
+
         let imageUrl = document.getElementById("carImage").value;
         const fileInput = document.getElementById("carImageFile");
         if (fileInput.files && fileInput.files[0]) {
@@ -87,15 +87,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-window.deleteCar = function(id) {
-    if(confirm("Are you sure you want to delete this car?")) {
+window.deleteCar = function (id) {
+    if (confirm("Are you sure you want to delete this car?")) {
         db.remove("cars", id);
         showToast("Car deleted.", "success");
         setTimeout(() => window.location.reload(), 1000);
     }
 }
 
-window.openEditModal = function(id) {
+window.openEditModal = function (id) {
     const car = db.get("cars").find(c => c.id === id);
     if (!car) return;
     document.getElementById("editCarId").value = car.id;
@@ -111,7 +111,7 @@ window.openEditModal = function(id) {
 document.getElementById("editCarForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const id = document.getElementById("editCarId").value;
-    
+
     let imageUrl = document.getElementById("editCarImage").value;
     const fileInput = document.getElementById("editCarImageFile");
     if (fileInput.files && fileInput.files[0]) {
@@ -130,13 +130,13 @@ document.getElementById("editCarForm").addEventListener("submit", async (e) => {
         price_per_day: parseFloat(document.getElementById("editCarPrice").value)
     };
     if (imageUrl) updatedCar.image = imageUrl; // only update image if provided
-    
+
     db.update("cars", id, updatedCar);
     showToast("Car updated successfully!", "success");
     setTimeout(() => window.location.reload(), 1000);
 });
 
-window.toggleAvailability = function(id) {
+window.toggleAvailability = function (id) {
     const car = db.get("cars").find(c => c.id === id);
     if (car) {
         db.update("cars", id, { availability: !car.availability });
@@ -145,8 +145,8 @@ window.toggleAvailability = function(id) {
     }
 }
 
-window.cancelBookingAdmin = function(bookingId, carId) {
-    if(confirm("Override and cancel this user booking?")) {
+window.cancelBookingAdmin = function (bookingId, carId) {
+    if (confirm("Override and cancel this user booking?")) {
         db.update("bookings", bookingId, { status: "Cancelled" });
         db.update("cars", carId, { availability: true });
         showToast("Booking cancelled successfully", "success");
